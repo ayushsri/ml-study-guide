@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Engineer Study Page</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(255,255,255,0.08);
+      --panel-2: rgba(255,255,255,0.05);
+      --text: #e8f0ff;
+      --muted: #b9c7e0;
+      --accent: #8b9dff;
+      --accent-2: #60f0d1;
+      --accent-3: #fbbf24;
+      --good: #8ef2b0;
+      --bad: #fda4af;
+      --shadow: 0 24px 70px rgba(0,0,0,0.34);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(139,157,255,0.18), transparent 22%),
+        radial-gradient(circle at top left, rgba(96,240,209,0.12), transparent 20%),
+        linear-gradient(180deg, #07111f 0%, #0d1a2d 56%, #0a1322 100%);
+      line-height: 1.65;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 34px 20px 70px;
+    }
+
+    .hero {
+      padding: 36px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(139,157,255,0.2), rgba(96,240,209,0.12));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      color: var(--accent-2);
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      margin: 0 0 12px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .pillrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.09);
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 22px;
+      margin-top: 26px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static !important; }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .toc {
+      position: sticky;
+      top: 18px;
+    }
+
+    .toc h2, .section h2, .section h3 { margin-top: 0; }
+    .toc a {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin: 8px 0;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+
+    .toc a:hover { background: rgba(139,157,255,0.16); }
+
+    .section {
+      margin-bottom: 20px;
+      scroll-margin-top: 18px;
+    }
+
+    .kicker {
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    p { color: var(--muted); }
+    ul { padding-left: 20px; }
+    li { color: var(--muted); margin: 6px 0; }
+
+    .two, .three {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .two { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .three { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+    .mini {
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .memory {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent-2);
+      border-radius: 14px;
+      background: rgba(96,240,209,0.08);
+      color: #dcfff7;
+      font-weight: 600;
+    }
+
+    .formula {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #f8fbff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 14px;
+    }
+
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+    .warn { color: var(--accent-3); }
+
+    .summary {
+      font-size: 15px;
+      color: #eaf2ff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">AI Engineer • Detailed Study Notes</div>
+      <h1>AI Engineer Handbook</h1>
+      <p class="subtitle">A detailed revision page for practical AI engineering: how to think about problems, choose the right approach, build robust systems, evaluate them well, and avoid the most common production failures.</p>
+      <div class="pillrow">
+        <div class="pill">Problem Framing</div>
+        <div class="pill">Classic ML vs LLMs</div>
+        <div class="pill">RAG</div>
+        <div class="pill">Agents</div>
+        <div class="pill">Evaluation</div>
+        <div class="pill">Guardrails</div>
+        <div class="pill">Latency & Cost</div>
+        <div class="pill">Observability</div>
+        <div class="pill">Drift</div>
+        <div class="pill">Security</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="card toc">
+        <h2>Contents</h2>
+        <a href="#what">1. What an AI engineer does</a>
+        <a href="#framing">2. Problem framing</a>
+        <a href="#ml-vs-llm">3. Classic ML vs LLMs</a>
+        <a href="#data">4. Data is king</a>
+        <a href="#ml-fund">5. ML fundamentals</a>
+        <a href="#bias-variance">6. Bias-variance tradeoff</a>
+        <a href="#metrics">7. Important metrics</a>
+        <a href="#embeddings">8. Embeddings</a>
+        <a href="#transformers">9. Transformers</a>
+        <a href="#tokenization">10. Tokenization</a>
+        <a href="#prompting">11. Prompt engineering</a>
+        <a href="#structured">12. Structured outputs</a>
+        <a href="#tools">13. Tool calling</a>
+        <a href="#rag">14. RAG</a>
+        <a href="#ft-vs-rag">15. Fine-tuning vs RAG</a>
+        <a href="#hallucination">16. Hallucination</a>
+        <a href="#agents">17. AI agents</a>
+        <a href="#eval">18. Evaluation</a>
+        <a href="#judge">19. LLM-as-judge</a>
+        <a href="#guardrails">20. Guardrails</a>
+        <a href="#latency">21. Latency optimization</a>
+        <a href="#cost">22. Cost optimization</a>
+        <a href="#caching">23. Caching</a>
+        <a href="#observability">24. Observability</a>
+        <a href="#failures">25. Production failure modes</a>
+        <a href="#system-design">26. System design thinking</a>
+        <a href="#model-selection">27. Model selection</a>
+        <a href="#retrieval-design">28. Retrieval design</a>
+        <a href="#leakage">29. Data leakage</a>
+        <a href="#feature-eng">30. Feature engineering still matters</a>
+        <a href="#deployment">31. Deployment mindset</a>
+        <a href="#drift">32. Drift</a>
+        <a href="#hitl">33. Human-in-the-loop</a>
+        <a href="#security">34. Security / safety</a>
+        <a href="#habits">35. Good engineering habits</a>
+        <a href="#interview">36. Interview one-liners</a>
+        <a href="#revision">37. Fast revision summary</a>
+      </aside>
+
+      <main>
+        <section id="what" class="card section">
+          <div class="kicker">Topic 1</div>
+          <h2>What an AI engineer actually does</h2>
+          <p>An AI engineer does not just call models. The real job is turning probabilistic model behavior into a product that users can trust. That means combining data pipelines, model selection, system design, evaluation, product constraints, and production monitoring.</p>
+          <div class="summary">Think in this order: <strong>Problem → Data → Baseline → Model choice → System design → Evaluation → Deploy → Monitor</strong>.</div>
+          <div class="memory">Remember it as a factory line: first understand the problem, then feed the right data, choose the right machine, check the output, ship it, and keep watching it.</div>
+        </section>
+
+        <section id="framing" class="card section">
+          <div class="kicker">Topic 2</div>
+          <h2>Problem framing</h2>
+          <p>Before building anything, define the task very precisely. Many weak AI systems fail because the team built the wrong thing, not because the model was bad. You should know the exact input, exact output, what counts as success, what errors matter most, and what constraints exist on latency, cost, and reliability.</p>
+          <div class="three">
+            <div class="mini"><h3>Ask</h3><ul><li>What is the input?</li><li>What is the output?</li><li>What task type is this?</li></ul></div>
+            <div class="mini"><h3>Define</h3><ul><li>Success metric</li><li>Failure modes</li><li>Latency/cost budget</li></ul></div>
+            <div class="mini"><h3>Decide</h3><ul><li>Rules vs ML vs LLM</li><li>Need for retrieval?</li><li>Need for human review?</li></ul></div>
+          </div>
+          <div class="memory">Memory line: <strong>Input, Output, Success, Failure, Constraints</strong>. If those five are clear, the project is much easier.</div>
+        </section>
+
+        <section id="ml-vs-llm" class="card section">
+          <div class="kicker">Topic 3</div>
+          <h2>Classic ML vs LLMs</h2>
+          <p>Classic ML is better when the data is structured, labels exist, tasks are stable, and you need low latency or explainability. LLMs shine when the input is unstructured text and you need flexible language understanding, generation, summarization, extraction, or tool orchestration. RAG becomes useful when answers depend on changing or private knowledge.</p>
+          <div class="two">
+            <div class="mini"><h3>Use Classic ML</h3><ul><li>Tabular or numerical data</li><li>Stable labels</li><li>Fast, cheap predictions</li><li>Interpretability matters</li></ul></div>
+            <div class="mini"><h3>Use LLMs</h3><ul><li>Unstructured text</li><li>Q&A, summarization, extraction</li><li>Language-heavy workflows</li><li>Tool-based assistants</li></ul></div>
+          </div>
+          <div class="memory">Memory trick: <strong>Tables → ML, Text → LLM, Private/Fresh knowledge → RAG</strong>.</div>
+        </section>
+
+        <section id="data" class="card section">
+          <div class="kicker">Topic 4</div>
+          <h2>Data is king</h2>
+          <p>Model quality is usually limited by data quality more than model complexity. Poor labels, duplicates, leakage, skew, and stale documents can quietly destroy performance. In RAG systems, retrieval quality is a kind of data quality too, because the model only answers well if the evidence it sees is correct and relevant.</p>
+          <ul>
+            <li>Check missing values and inconsistent formats</li>
+            <li>Watch for train/validation/test contamination</li>
+            <li>Check class imbalance and skew</li>
+            <li>In RAG, remove stale or contradictory documents</li>
+          </ul>
+          <div class="memory">Memory line: <strong>Bad data in, polished bad answers out.</strong></div>
+        </section>
+
+        <section id="ml-fund" class="card section">
+          <div class="kicker">Topic 5</div>
+          <h2>ML fundamentals</h2>
+          <p>These concepts teach engineering judgment. Supervised learning uses labeled data to learn input-output mapping. Unsupervised learning finds hidden structure without labels. Overfitting means the model memorizes noise; underfitting means it is too simple to learn useful patterns. These ideas help you reason about model behavior instead of guessing.</p>
+          <div class="two">
+            <div class="mini"><h3>Supervised</h3><p>Learn from labeled examples like spam detection or churn prediction.</p></div>
+            <div class="mini"><h3>Unsupervised</h3><p>Find clusters, anomalies, or compressed structure without labels.</p></div>
+            <div class="mini"><h3 class="bad">Overfitting</h3><p>Great on training data, weak on new data.</p></div>
+            <div class="mini"><h3 class="warn">Underfitting</h3><p>Weak on both training and validation because the model is too simple.</p></div>
+          </div>
+          <div class="memory">Memory line: supervised learns answers, unsupervised finds patterns, overfitting memorizes, underfitting misses.</div>
+        </section>
+
+        <section id="bias-variance" class="card section">
+          <div class="kicker">Topic 6</div>
+          <h2>Bias-variance tradeoff</h2>
+          <p>Bias is error from being too simple. Variance is error from being too sensitive to the training data. As model complexity goes up, bias often falls and variance often rises. Good generalization comes from balancing both instead of maximizing complexity blindly.</p>
+          <div class="two">
+            <div class="mini"><h3>High Bias</h3><p>Model misses real signal and underfits.</p></div>
+            <div class="mini"><h3>High Variance</h3><p>Model memorizes noise and overfits.</p></div>
+          </div>
+          <div class="memory">Memory trick: <strong>Bias = too rigid, Variance = too fragile.</strong></div>
+        </section>
+
+        <section id="metrics" class="card section">
+          <div class="kicker">Topic 7</div>
+          <h2>Important metrics</h2>
+          <p>Metrics should match the business cost of mistakes. In classification, accuracy can be misleading when classes are imbalanced, so precision, recall, and F1 are often more meaningful. In regression, MAE and RMSE show different error behavior. In retrieval and ranking, metrics like Precision@K, Recall@K, MRR, and NDCG measure whether the right items appear early enough.</p>
+          <div class="three">
+            <div class="mini"><h3>Classification</h3><ul><li>Accuracy</li><li>Precision</li><li>Recall</li><li>F1</li><li>AUC-ROC</li></ul></div>
+            <div class="mini"><h3>Regression</h3><ul><li>MAE</li><li>MSE / RMSE</li><li>R²</li></ul></div>
+            <div class="mini"><h3>LLM / Retrieval</h3><ul><li>Faithfulness</li><li>Groundedness</li><li>Precision@K</li><li>Latency</li><li>Cost/request</li></ul></div>
+          </div>
+          <div class="memory">Memory line: <strong>Choose metrics based on what hurts most when the system is wrong.</strong></div>
+        </section>
+
+        <section id="embeddings" class="card section">
+          <div class="kicker">Topic 8</div>
+          <h2>Embeddings</h2>
+          <p>Embeddings turn text, images, or other content into dense vectors where similar meaning lands in nearby regions of vector space. They power semantic search, clustering, deduplication, recommendation, and the retrieval stage of RAG. They work well, but only if chunking, metadata, and indexing are handled carefully.</p>
+          <div class="summary">Key idea: <strong>closer vectors usually mean closer meaning</strong>.</div>
+          <div class="memory">Memory trick: imagine each sentence gets GPS coordinates in meaning-space. Similar ideas live near each other.</div>
+        </section>
+
+        <section id="transformers" class="card section">
+          <div class="kicker">Topic 9</div>
+          <h2>Transformers</h2>
+          <p>Transformers process sequences using attention, which lets each token look at other relevant tokens in the sequence. This made them much better than older RNN-style approaches for capturing long-range relationships. They scale well, train in parallel, and form the basis of modern LLMs.</p>
+          <ul>
+            <li>Tokenization converts text into tokens</li>
+            <li>Embeddings represent tokens numerically</li>
+            <li>Self-attention learns what each token should focus on</li>
+            <li>Multi-head attention captures different relationships at once</li>
+          </ul>
+          <div class="memory">Memory line: <strong>a transformer reads by letting every word decide which other words matter most.</strong></div>
+        </section>
+
+        <section id="tokenization" class="card section">
+          <div class="kicker">Topic 10</div>
+          <h2>Tokenization</h2>
+          <p>Models do not read text as full words the way humans do. They process tokens, which may be full words, pieces of words, punctuation, or symbols. This matters because cost, latency, prompt limits, and chunking strategy all depend on token count, not just visible word count.</p>
+          <div class="memory">Memory trick: the model pays rent per token, not per sentence.</div>
+        </section>
+
+        <section id="prompting" class="card section">
+          <div class="kicker">Topic 11</div>
+          <h2>Prompt engineering</h2>
+          <p>Prompting is specifying the behavior you want as clearly as possible. Good prompts define task, context, constraints, output format, and sometimes examples. Great prompt engineering is less about clever tricks and more about reducing ambiguity, constraining the answer shape, and handling common edge cases.</p>
+          <div class="two">
+            <div class="mini"><h3>Good Prompt Traits</h3><ul><li>Clear task</li><li>Explicit constraints</li><li>Expected output format</li><li>Relevant examples</li></ul></div>
+            <div class="mini"><h3>Bad Prompt Traits</h3><ul><li>Vague request</li><li>No format rules</li><li>Too much irrelevant context</li><li>No handling of corner cases</li></ul></div>
+          </div>
+          <div class="memory">Memory line: <strong>be clear, be specific, be structured.</strong></div>
+        </section>
+
+        <section id="structured" class="card section">
+          <div class="kicker">Topic 12</div>
+          <h2>Structured outputs</h2>
+          <p>Production systems usually prefer JSON or schema-constrained outputs instead of open-ended text. This makes downstream parsing safer, reduces brittle regex logic, and makes validation possible. But you still need to check for missing keys, wrong types, invalid JSON, or hallucinated fields.</p>
+          <div class="memory">Memory trick: free text is easy to read, structured output is easy to build with.</div>
+        </section>
+
+        <section id="tools" class="card section">
+          <div class="kicker">Topic 13</div>
+          <h2>Tool calling</h2>
+          <p>Tool calling lets the model use external capabilities such as search, calculators, APIs, databases, or code execution. The typical pattern is: user asks, model decides the tool, the tool runs, then the model synthesizes the final answer. The main risks are wrong tool choice, bad arguments, silent failures, and looping behavior.</p>
+          <div class="memory">Memory line: <strong>the LLM decides, the tool does, the LLM explains.</strong></div>
+        </section>
+
+        <section id="rag" class="card section">
+          <div class="kicker">Topic 14</div>
+          <h2>RAG</h2>
+          <p>RAG means Retrieve, then Generate. Instead of relying only on built-in model memory, the system first fetches relevant external knowledge and then asks the model to answer using that evidence. This helps with fresher knowledge, private knowledge, citations, and lower hallucination risk.</p>
+          <div class="three">
+            <div class="mini"><h3>Pipeline</h3><ul><li>Ingest docs</li><li>Chunk docs</li><li>Embed chunks</li><li>Store in vector DB</li><li>Retrieve</li><li>Rerank</li><li>Generate</li></ul></div>
+            <div class="mini"><h3>Why use it</h3><ul><li>Current information</li><li>Private documents</li><li>Evidence-backed answers</li><li>Reduced hallucination</li></ul></div>
+            <div class="mini"><h3>Failure points</h3><ul><li>Bad chunking</li><li>Noisy docs</li><li>Poor retrieval</li><li>Weak grounding prompt</li></ul></div>
+          </div>
+          <div class="memory">Memory line: <strong>RAG brings the book before the model writes the answer.</strong></div>
+        </section>
+
+        <section id="ft-vs-rag" class="card section">
+          <div class="kicker">Topic 15</div>
+          <h2>Fine-tuning vs RAG</h2>
+          <p>Use RAG when you need knowledge injection from private or changing documents. Use fine-tuning when you need the model to behave differently: style consistency, task specialization, domain patterns, or better response format behavior. Fine-tuning is usually not the right tool for constantly changing facts.</p>
+          <div class="memory">Memory trick: <strong>RAG teaches facts at runtime; fine-tuning teaches habits.</strong></div>
+        </section>
+
+        <section id="hallucination" class="card section">
+          <div class="kicker">Topic 16</div>
+          <h2>Hallucination</h2>
+          <p>Hallucination happens when the model produces information that is unsupported or false. It often comes from missing context, ambiguous prompts, weak retrieval, or asking the model to go beyond available evidence. Good systems reduce hallucination by grounding, citing sources, validating outputs, and abstaining when evidence is missing.</p>
+          <div class="memory">Memory line: <strong>when evidence is weak, the model may guess.</strong></div>
+        </section>
+
+        <section id="agents" class="card section">
+          <div class="kicker">Topic 17</div>
+          <h2>AI agents</h2>
+          <p>An agent is an LLM-based system that can plan, take actions, use tools, and adapt based on intermediate results. Agents are useful for multi-step workflows but are often overused. If a simple prompt or deterministic workflow works, an agent may add cost, latency, and debugging pain without enough benefit.</p>
+          <div class="two">
+            <div class="mini"><h3>Good for</h3><ul><li>Multi-step planning</li><li>Tool use</li><li>Environment feedback</li><li>Replanning</li></ul></div>
+            <div class="mini"><h3>Risks</h3><ul><li>Loops</li><li>Cost explosion</li><li>Hidden failures</li><li>Harder debugging</li></ul></div>
+          </div>
+          <div class="memory">Memory trick: <strong>use agents only when the task really has multiple moving parts.</strong></div>
+        </section>
+
+        <section id="eval" class="card section">
+          <div class="kicker">Topic 18</div>
+          <h2>Evaluation</h2>
+          <p>If you cannot measure a system, you cannot trust or improve it. Offline evaluation checks behavior before deployment. Online evaluation measures real user outcomes in production. Human evaluation is essential when correctness depends on quality, style, usefulness, or faithfulness rather than exact labels alone.</p>
+          <div class="three">
+            <div class="mini"><h3>Offline</h3><p>Benchmarks and test suites before launch.</p></div>
+            <div class="mini"><h3>Online</h3><p>Live metrics like task success, latency, and abandonment.</p></div>
+            <div class="mini"><h3>Human</h3><p>Rubric-based judgment for nuanced quality.</p></div>
+          </div>
+          <div class="memory">Memory line: <strong>offline tells you if it might work, online tells you if it does work.</strong></div>
+        </section>
+
+        <section id="judge" class="card section">
+          <div class="kicker">Topic 19</div>
+          <h2>LLM-as-judge</h2>
+          <p>This means using one model to score or compare outputs from another model. It is helpful for large-scale evaluation and rubric-based reviews, but it can also introduce bias or inconsistency. The safest setup is LLM judge plus human audits plus task-grounded metrics.</p>
+          <div class="memory">Memory trick: a model judge is a fast reviewer, not the final court.</div>
+        </section>
+
+        <section id="guardrails" class="card section">
+          <div class="kicker">Topic 20</div>
+          <h2>Guardrails</h2>
+          <p>Guardrails are controls that improve both safety and reliability. Examples include input validation, schema validation, rate limits, output filtering, tool restrictions, retrieval filters, and fallback behavior. Guardrails keep probabilistic systems from behaving unpredictably in production.</p>
+          <div class="memory">Memory line: <strong>guardrails keep the model on the road.</strong></div>
+        </section>
+
+        <section id="latency" class="card section">
+          <div class="kicker">Topic 21</div>
+          <h2>Latency optimization</h2>
+          <p>Latency often comes from large prompts, slow retrieval, multiple model calls, tool chains, and overly long outputs. You can reduce it by shrinking token counts, choosing smaller models where possible, parallelizing independent steps, caching repeated work, and avoiding unnecessary agent loops.</p>
+          <div class="memory">Memory trick: <strong>every extra token and every extra call adds waiting time.</strong></div>
+        </section>
+
+        <section id="cost" class="card section">
+          <div class="kicker">Topic 22</div>
+          <h2>Cost optimization</h2>
+          <p>The biggest cost drivers are prompt tokens, completion tokens, the number of calls, and the model tier you choose. Cost comes down when you cache, trim unnecessary history, retrieve fewer but better chunks, route easy tasks to cheaper models, and keep outputs appropriately short.</p>
+          <div class="memory">Memory line: <strong>cost = tokens × calls × model price.</strong></div>
+        </section>
+
+        <section id="caching" class="card section">
+          <div class="kicker">Topic 23</div>
+          <h2>Caching</h2>
+          <p>Caching stores expensive intermediate or final results so repeated work can be skipped. Common cache layers include prompt-response cache, retrieval cache, embedding cache, and feature cache. Caching saves time and money, but only if you also manage invalidation when the knowledge or prompt logic changes.</p>
+          <div class="memory">Memory trick: <strong>cache saves repeated thinking, but stale cache can lie.</strong></div>
+        </section>
+
+        <section id="observability" class="card section">
+          <div class="kicker">Topic 24</div>
+          <h2>Observability</h2>
+          <p>Observability means having enough logging and tracing to understand why the system behaved a certain way. For AI systems, that includes prompts, retrieved chunks, tool calls, model outputs, token usage, latency by stage, and user feedback. Without observability, debugging becomes guesswork.</p>
+          <div class="memory">Memory line: <strong>if you cannot see inside the pipeline, you cannot fix it.</strong></div>
+        </section>
+
+        <section id="failures" class="card section">
+          <div class="kicker">Topic 25</div>
+          <h2>Common production failure modes</h2>
+          <p>AI systems often fail quietly. Common issues include wrong problem framing, weak eval sets, stale retrieval corpora, malformed structured output, silent tool failures, high latency, high cost, prompt regressions, and missing fallbacks or monitoring.</p>
+          <ul>
+            <li>Wrong task definition</li>
+            <li>Retrieval returning stale or irrelevant context</li>
+            <li>Parsing failures from malformed JSON</li>
+            <li>No rollback or no alerting when quality drops</li>
+          </ul>
+          <div class="memory">Memory trick: <strong>most failures are system failures, not pure model failures.</strong></div>
+        </section>
+
+        <section id="system-design" class="card section">
+          <div class="kicker">Topic 26</div>
+          <h2>Good system design thinking</h2>
+          <p>A strong AI engineer keeps asking practical questions: what is the simplest baseline, where does truth come from, how do we evaluate, what happens when the model fails, and how do we rollback changes safely. This mindset matters more than using trendy frameworks.</p>
+          <div class="memory">Memory line: <strong>design for failure first, then for success.</strong></div>
+        </section>
+
+        <section id="model-selection" class="card section">
+          <div class="kicker">Topic 27</div>
+          <h2>Model selection</h2>
+          <p>The best model is not the biggest one. You choose based on task difficulty, latency budget, cost budget, accuracy requirement, context length needs, output structure needs, and safety requirements. Strong engineers match model capacity to business need.</p>
+          <div class="memory">Memory trick: <strong>right-sized beats oversized.</strong></div>
+        </section>
+
+        <section id="retrieval-design" class="card section">
+          <div class="kicker">Topic 28</div>
+          <h2>Retrieval design notes</h2>
+          <p>Retrieval quality depends on chunk size, overlap, metadata, hybrid search, reranking, query rewriting, top-k choice, and document cleaning. Dense retrieval finds semantic similarity, keyword retrieval preserves exact matches, and reranking helps refine the best candidates.</p>
+          <div class="summary">A strong practical pattern is: <strong>dense retrieval + keyword retrieval + reranking</strong>.</div>
+          <div class="memory">Memory line: <strong>retrieve broadly, then refine sharply.</strong></div>
+        </section>
+
+        <section id="leakage" class="card section">
+          <div class="kicker">Topic 29</div>
+          <h2>Data leakage</h2>
+          <p>Leakage happens when the model sees information during training or evaluation that would not be available at real inference time. This creates fake confidence. Common examples include future information leaking into features, duplicates across train and test, or labels indirectly appearing in inputs.</p>
+          <div class="memory">Memory trick: <strong>if the model knows tomorrow while predicting today, you have leakage.</strong></div>
+        </section>
+
+        <section id="feature-eng" class="card section">
+          <div class="kicker">Topic 30</div>
+          <h2>Feature engineering still matters</h2>
+          <p>Even in the deep learning era, feature design and preprocessing still matter a lot, especially in tabular problems and retrieval systems. Good features help the model see the useful signal more clearly. In many practical cases, feature engineering beats chasing a fancier algorithm.</p>
+          <div class="memory">Memory line: <strong>better inputs often beat smarter models.</strong></div>
+        </section>
+
+        <section id="deployment" class="card section">
+          <div class="kicker">Topic 31</div>
+          <h2>Deployment mindset</h2>
+          <p>Shipping a model is the start, not the finish. After deployment, you need monitoring, drift checks, refreshed evaluations, prompt/version control, rollback paths, incident handling, and user feedback loops. A production AI system is a living system.</p>
+          <div class="memory">Memory trick: <strong>deployed does not mean done.</strong></div>
+        </section>
+
+        <section id="drift" class="card section">
+          <div class="kicker">Topic 32</div>
+          <h2>Drift</h2>
+          <p>Drift means the world changed after deployment. Data drift means the input distribution changed. Concept drift means the relationship between input and target changed. Retrieval drift means the document corpus changed. User behavior drift means people now use the system differently than before. All of these require periodic re-evaluation.</p>
+          <div class="three">
+            <div class="mini"><h3>Data drift</h3><p>Inputs look different now.</p></div>
+            <div class="mini"><h3>Concept drift</h3><p>The rules connecting input to truth changed.</p></div>
+            <div class="mini"><h3>Retrieval / behavior drift</h3><p>Docs or usage patterns changed.</p></div>
+          </div>
+          <div class="memory">Memory line: <strong>something changed after launch.</strong> Ask: data, truth, docs, or usage?</div>
+        </section>
+
+        <section id="hitl" class="card section">
+          <div class="kicker">Topic 33</div>
+          <h2>Human-in-the-loop</h2>
+          <p>Human review is useful when decisions are high-stakes, confidence is low, or output quality must be approved before action. Good HITL systems do more than add humans randomly; they route the right cases to humans and log feedback so the system can improve over time.</p>
+          <div class="memory">Memory trick: <strong>let the model draft, let the human decide when risk is high.</strong></div>
+        </section>
+
+        <section id="security" class="card section">
+          <div class="kicker">Topic 34</div>
+          <h2>Security / safety notes</h2>
+          <p>AI systems face prompt injection, data exfiltration, unsafe tool usage, secret leakage, jailbreak attempts, and over-permissioned agent behavior. Good defenses include least privilege, tool isolation, strict argument validation, content sanitization, and never blindly trusting instructions found inside retrieved documents.</p>
+          <div class="memory">Memory line: <strong>treat model inputs as untrusted, especially retrieved text.</strong></div>
+        </section>
+
+        <section id="habits" class="card section">
+          <div class="kicker">Topic 35</div>
+          <h2>Good engineering habits</h2>
+          <p>The habits that create strong AI engineers are simple but powerful: start with a baseline, measure before optimizing, compare alternatives empirically, build modular pipelines, keep prompts versioned, log important events, and document assumptions clearly.</p>
+          <div class="memory">Memory trick: <strong>simple baseline first, evidence before opinions.</strong></div>
+        </section>
+
+        <section id="interview" class="card section">
+          <div class="kicker">Topic 36</div>
+          <h2>Interview-style one-liners</h2>
+          <div class="three">
+            <div class="mini"><h3>Good AI engineer</h3><p>Builds reliable AI systems, not just model demos.</p></div>
+            <div class="mini"><h3>What matters in RAG</h3><p>Retrieval quality, chunking, reranking, grounding, evaluation.</p></div>
+            <div class="mini"><h3>Why systems fail</h3><p>Poor data, weak eval, bad retrieval, missing guardrails.</p></div>
+          </div>
+          <div class="memory">Memory line: <strong>reliability beats flashiness.</strong></div>
+        </section>
+
+        <section id="revision" class="card section">
+          <div class="kicker">Topic 37</div>
+          <h2>Fast revision summary</h2>
+          <div class="summary"><strong>AI engineer = problem framing + data quality + model choice + retrieval/tooling + evaluation + production reliability.</strong></div>
+          <div class="summary"><strong>Baseline first, measure everything, retrieve well, constrain outputs, monitor in production.</strong></div>
+          <div class="memory">Master memory line: <strong>good AI engineering is not about the fanciest model, it is about building a system that works reliably in the real world.</strong></div>
+        </section>
+
+        <footer>
+          Built as a detailed AI engineer study page with explanations and memory cues for each topic.
+        </footer>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
